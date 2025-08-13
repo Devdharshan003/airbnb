@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdSpace - Marketplace for Advertising</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .search-section h1 {
+            font-size: 48px;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .search-section p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 50px;
+            font-size: 16px;
+            min-width: 200px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        select.search-input {
+            background: white;
+        }
+
+        .main-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .tab {
+            padding: 15px 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .listings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .listing-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #e1e5e9;
+        }
+
+        .listing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .listing-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .listing-type {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .listing-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .listing-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .listing-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .listing-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .listing-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #ffa500;
+        }
+
+        .form-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .booking-summary {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid #c3e6cb;
+        }
+
+        @media (max-width: 768px) {
+            .search-container {
+                flex-direction: column;
+            }
+            
+            .listings-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-section h1 {
+                font-size: 32px;
+            }
+        }
+
+        .floating-action {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .floating-action:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <nav class="nav">
+                <div class="logo">🚀 AdSpace</div>
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="showTab('browse')">Browse Ads</button>
+                    <button class="btn btn-secondary" onclick="showTab('list')">List Your Space</button>
+                    <button class="btn btn-secondary" onclick="showTab('dashboard')">Dashboard</button>
+                    <button class="btn btn-primary">Sign Up</button>
+                </div>
+            </nav>
+            
+            <div class="search-section">
+                <h1>Find Your Perfect Ad Space</h1>
+                <p>Connect advertisers with publishers across online and offline channels</p>
+                <div class="search-container">
+                    <input type="text" class="search-input" placeholder="Search ad spaces..." id="searchInput">
+                    <select class="search-input" id="categoryFilter">
+                        <option value="">All Categories</option>
+                        <option value="social">Social Media</option>
+                        <option value="video">Video Content</option>
+                        <option value="outdoor">Outdoor/Billboard</option>
+                        <option value="podcast">Podcast</option>
+                        <option value="website">Website</option>
+                        <option value="retail">Retail Space</option>
+                    </select>
+                    <select class="search-input" id="locationFilter">
+                        <option value="">All Locations</option>
+                        <option value="global">Global/Online</option>
+                        <option value="us">United States</option>
+                        <option value="uk">United Kingdom</option>
+                        <option value="ca">Canada</option>
+                        <option value="au">Australia</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="performSearch()">
+                        <i data-lucide="search"></i> Search
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="tabs">
+                <button class="tab active" onclick="showTab('browse')">Browse Ad Spaces</button>
+                <button class="tab" onclick="showTab('list')">List Your Space</button>
+                <button class="tab" onclick="showTab('dashboard')">Dashboard</button>
+                <button class="tab" onclick="showTab('analytics')">Analytics</button>
+            </div>
+
+            <!-- Browse Tab -->
+            <div class="tab-content active" id="browseTab">
+                <div class="listings-grid" id="listingsGrid">
+                    <!-- Listings will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- List Your Space Tab -->
+            <div class="tab-content" id="listTab">
+                <div class="form-section">
+                    <h2>List Your Ad Space</h2>
+                    <form id="listingForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Ad Space Type</label>
+                                <select name="type" required>
+                                    <option value="">Select Type</option>
+                                    <option value="youtube">YouTube Channel</option>
+                                    <option value="instagram">Instagram</option>
+                                    <option value="tiktok">TikTok</option>
+                                    <option value="podcast">Podcast</option>
+                                    <option value="website">Website</option>
+                                    <option value="billboard">Billboard</option>
+                                    <option value="retail">Retail Display</option>
+                                    <option value="vehicle">Vehicle Wrap</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input type="text" name="title" placeholder="e.g., Tech Review YouTube Channel" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Location</label>
+                                <input type="text" name="location" placeholder="Global, New York, etc.">
+                            </div>
+                            <div class="form-group">
+                                <label>Audience Size</label>
+                                <input type="number" name="audience" placeholder="e.g., 50000" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Price per Day ($)</label>
+                                <input type="number" name="price" placeholder="e.g., 299" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select name="category" required>
+                                    <option value="">Select Category</option>
+                                    <option value="tech">Technology</option>
+                                    <option value="lifestyle">Lifestyle</option>
+                                    <option value="gaming">Gaming</option>
+                                    <option value="business">Business</option>
+                                    <option value="entertainment">Entertainment</option>
+                                    <option value="education">Education</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="description" placeholder="Describe your audience, engagement rates, and what makes your ad space unique..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">List My Ad Space</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div class="tab-content" id="dashboardTab">
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Active Listings</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">$2,847</div>
+                        <div class="stat-label">Total Earnings</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">4.8</div>
+                        <div class="stat-label">Average Rating</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">156</div>
+                        <div class="stat-label">Total Bookings</div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Your Active Listings</h3>
+                    <div id="userListings">
+                        <div class="listing-card">
+                            <div class="listing-title">Your Tech Review Channel</div>
+                            <div class="listing-description">Status: Active • 3 pending bookings</div>
+                            <div class="listing-price">$450/day</div>
+                            <button class="btn btn-secondary">Edit Listing</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div class="tab-content" id="analyticsTab">
+                <div class="form-section">
+                    <h2>Performance Analytics</h2>
+                    <p>Track your ad space performance, earnings, and audience insights.</p>
+                    
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">2.3%</div>
+                            <div class="stat-label">Avg. CTR</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">89%</div>
+                            <div class="stat-label">Completion Rate</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">$12.50</div>
+                            <div class="stat-label">Cost per Conversion</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">4.2x</div>
+                            <div class="stat-label">ROI</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Book Ad Space</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="bookingContent">
+                <!-- Booking content will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="floating-action" onclick="showTab('list')" title="List Your Ad Space">
+        <i data-lucide="plus"></i>
+    </button>
+
+    <script>
+        // Sample data for demonstration
+        let listings = [
+            {
+                id: 1,
+                type: 'YouTube',
+                title: 'Tech Reviews Channel',
+                description: 'High-engagement tech channel with focus on consumer electronics and software reviews.',
+                audience: 125000,
+                location: 'Global',
+                category: 'tech',
+                price: 450,
+                rating: 4.9,
+                reviews: 23,
+                engagement: '8.5%',
+                demographics: '25-45, Tech Professionals'
+            },
+            {
+                id: 2,
+                type: 'Instagram',
+                title: 'Lifestyle Influencer',
+                description: 'Fashion and lifestyle content with highly engaged millennial audience.',
+                audience: 89000,
+                location: 'United States',
+                category: 'lifestyle',
+                price: 320,
+                rating: 4.7,
+                reviews: 45,
+                engagement: '12.3%',
+                demographics: '18-35, Female 70%'
+            },
+            {
+                id: 3,
+                type: 'Billboard',
+                title: 'Times Square Digital Billboard',
+                description: 'Premium digital billboard in the heart of Times Square with massive daily exposure.',
+                audience: 300000,
+                location: 'New York, NY',
+                category: 'outdoor',
+                price: 2500,
+                rating: 4.8,
+                reviews: 12,
+                engagement: 'N/A',
+                demographics: 'Mixed Demographics'
+            },
+            {
+                id: 4,
+                type: 'Podcast',
+                title: 'Business Strategy Podcast',
+                description: 'Weekly podcast covering startup strategies and entrepreneur interviews.',
+                audience: 45000,
+                location: 'Global',
+                category: 'business',
+                price: 280,
+                rating: 4.6,
+                reviews: 18,
+                engagement: '15.2%',
+                demographics: '25-50, Business Owners'
+            },
+            {
+                id: 5,
+                type: 'Website',
+                title: 'Gaming News Website',
+                description: 'Popular gaming news site with banner and article sponsorship opportunities.',
+                audience: 200000,
+                location: 'Global',
+                category: 'gaming',
+                price: 380,
+                rating: 4.5,
+                reviews: 31,
+                engagement: '6.8%',
+                demographics: '16-35, Male 65%'
+            },
+            {
+                id: 6,
+                type: 'TikTok',
+                title: 'Comedy Creator',
+                description: 'Viral comedy content creator with young, highly engaged audience.',
+                audience: 156000,
+                location: 'United States',
+                category: 'entertainment',
+                price: 420,
+                rating: 4.9,
+                reviews: 67,
+                engagement: '18.7%',
+                demographics: '16-28, Gen Z'
+            }
+        ];
+
+        let filteredListings = [...listings];
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            renderListings();
+            setupEventListeners();
+        });
+
+        function showTab(tabName) {
+            // Hide all tab contents
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            // Hide all tab buttons active state
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Show selected tab
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            
+            // Activate corresponding tab button
+            const activeTabButton = Array.from(tabs).find(tab => 
+                tab.textContent.toLowerCase().includes(tabName) || 
+                (tabName === 'browse' && tab.textContent.includes('Browse')) ||
+                (tabName === 'list' && tab.textContent.includes('List')) ||
+                (tabName === 'dashboard' && tab.textContent.includes('Dashboard')) ||
+                (tabName === 'analytics' && tab.textContent.includes('Analytics'))
+            );
+            if (activeTabButton) {
+                activeTabButton.classList.add('active');
+            }
+        }
+
+        function renderListings() {
+            const listingsGrid = document.getElementById('listingsGrid');
+            listingsGrid.innerHTML = '';
+
+            filteredListings.forEach(listing => {
+                const listingCard = createListingCard(listing);
+                listingsGrid.appendChild(listingCard);
+            });
+        }
+
+        function createListingCard(listing) {
+            const card = document.createElement('div');
+            card.className = 'listing-card';
+            card.innerHTML = `
+                <div class="listing-header">
+                    <div class="listing-type">${listing.type}</div>
+                    <div class="rating">
+                        <i data-lucide="star" style="width: 16px; height: 16px; fill: currentColor;"></i>
+                        <span>${listing.rating}</span>
+                        <span>(${listing.reviews})</span>
+                    </div>
+                </div>
+                <div class="listing-title">${listing.title}</div>
+                <div class="listing-description">${listing.description}</div>
+                <div class="listing-stats">
+                    <div class="stat">
+                        <i data-lucide="users" style="width: 16px; height: 16px;"></i>
+                        ${formatNumber(listing.audience)} audience
+                    </div>
+                    <div class="stat">
+                        <i data-lucide="map-pin" style="width: 16px; height: 16px;"></i>
+                        ${listing.location}
+                    </div>
+                    <div class="stat">
+                        <i data-lucide="trending-up" style="width: 16px; height: 16px;"></i>
+                        ${listing.engagement} engagement
+                    </div>
+                    <div class="stat">
+                        <i data-lucide="target" style="width: 16px; height: 16px;"></i>
+                        ${listing.demographics}
+                    </div>
+                </div>
+                <div class="listing-price">$${listing.price}/day</div>
+                <div class="listing-footer">
+                    <button class="btn btn-primary" onclick="openBookingModal(${listing.id})">
+                        <i data-lucide="calendar"></i>
+                        Book Now
+                    </button>
+                    <button class="btn btn-secondary" onclick="viewDetails(${listing.id})">
+                        <i data-lucide="eye"></i>
+                        Details
+                    </button>
+                </div>
+            `;
+
+            setTimeout(() => {
+                lucide.createIcons({
+                    nameAttr: 'data-lucide'
+                });
+            }, 0);
+
+            return card;
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toString();
+        }
+
+        function performSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const locationFilter = document.getElementById('locationFilter').value;
+
+            filteredListings = listings.filter(listing => {
+                const matchesSearch = !searchTerm || 
+                    listing.title.toLowerCase().includes(searchTerm) ||
+                    listing.description.toLowerCase().includes(searchTerm) ||
+                    listing.type.toLowerCase().includes(searchTerm);
+
+                const matchesCategory = !categoryFilter || listing.category === categoryFilter;
+                
+                const matchesLocation = !locationFilter || 
+                    (locationFilter === 'global' && listing.location === 'Global') ||
+                    listing.location.toLowerCase().includes(locationFilter.toLowerCase());
+
+                return matchesSearch && matchesCategory && matchesLocation;
+            });
+
+            renderListings();
+        }
+
+        function openBookingModal(listingId) {
+            const listing = listings.find(l => l.id === listingId);
+            if (!listing) return;
+
+            const modal = document.getElementById('bookingModal');
+            const content = document.getElementById('bookingContent');
+
+            content.innerHTML = `
+                <div class="booking-summary">
+                    <h4>${listing.title}</h4>
+                    <p><strong>Type:</strong> ${listing.type}</p>
+                    <p><strong>Audience:</strong> ${formatNumber(listing.audience)}</p>
+                    <p><strong>Price:</strong> $${listing.price}/day</p>
+                    <p><strong>Rating:</strong> ${listing.rating} ⭐ (${listing.reviews} reviews)</p>
+                </div>
+
+                <form id="bookingForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Campaign Name</label>
+                            <input type="text" name="campaignName" required placeholder="e.g., Summer Product Launch">
+                        </div>
+                        <div class="form-group">
+                            <label>Start Date</label>
+                            <input type="date" name="startDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Duration (days)</label>
+                            <input type="number" name="duration" min="1" value="7" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Budget</label>
+                            <input type="number" name="budget" value="${listing.price * 7}" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Campaign Description</label>
+                        <textarea name="description" placeholder="Describe your product/service and target audience..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Creative Assets URL (optional)</label>
+                        <input type="url" name="creativeUrl" placeholder="https://drive.google.com/...">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Confirm Booking - ${listing.price * 7}</button>
+                </form>
+            `;
+
+            modal.classList.add('active');
+            
+            // Handle booking form submission
+            document.getElementById('bookingForm').onsubmit = function(e) {
+                e.preventDefault();
+                handleBooking(listing);
+            };
+        }
+
+        function closeModal() {
+            document.getElementById('bookingModal').classList.remove('active');
+        }
+
+        function handleBooking(listing) {
+            const content = document.getElementById('bookingContent');
+            content.innerHTML = `
+                <div class="success-message">
+                    <h4>Booking Confirmed!</h4>
+                    <p>Your booking for <strong>${listing.title}</strong> has been submitted successfully.</p>
+                    <p>You'll receive a confirmation email within 24 hours with next steps.</p>
+                </div>
+                <button class="btn btn-primary" onclick="closeModal()">Close</button>
+            `;
+        }
+
+        function viewDetails(listingId) {
+            const listing = listings.find(l => l.id === listingId);
+            if (!listing) return;
+
+            alert(`Viewing details for: ${listing.title}\n\nThis would open a detailed page with:\n- Full analytics\n- Sample content\n- Audience insights\n- Reviews from other advertisers\n- Booking calendar\n- Similar listings`);
+        }
+
+        function setupEventListeners() {
+            // Form submission for listing creation
+            document.getElementById('listingForm').onsubmit = function(e) {
+                e.preventDefault();
+                handleListingSubmission();
+            };
+
+            // Enter key search
+            document.getElementById('searchInput').onkeypress = function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            };
+
+            // Close modal when clicking outside
+            document.getElementById('bookingModal').onclick = function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            };
+        }
+
+        function handleListingSubmission() {
+            const formData = new FormData(document.getElementById('listingForm'));
+            const newListing = {
+                id: listings.length + 1,
+                type: formData.get('type'),
+                title: formData.get('title'),
+                description: formData.get('description'),
+                audience: parseInt(formData.get('audience')),
+                location: formData.get('location'),
+                category: formData.get('category'),
+                price: parseInt(formData.get('price')),
+                rating: 0,
+                reviews: 0,
+                engagement: 'N/A',
+                demographics: 'Pending verification'
+            };
+
+            listings.push(newListing);
+            filteredListings = [...listings];
+            renderListings();
+
+            // Show success message
+            const form = document.getElementById('listingForm');
+            form.innerHTML = `
+                <div class="success-message">
+                    <h4>Listing Created Successfully!</h4>
+                    <p>Your ad space "<strong>${newListing.title}</strong>" has been submitted for review.</p>
+                    <p>It will be live within 24 hours after verification.</p>
+                </div>
+                <button class="btn btn-primary" onclick="location.reload()">Create Another Listing</button>
+            `;
+
+            // Switch to browse tab after a moment
+            setTimeout(() => {
+                showTab('browse');
+            }, 2000);
+        }
+
+        // Additional utility functions for a real implementation
+        function exportListings() {
+            const dataStr = JSON.stringify(listings, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'adspace_listings.json';
+            link.click();
+        }
+
+        function importListings(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const importedListings = JSON.parse(e.target.result);
+                        listings = importedListings;
+                        filteredListings = [...listings];
+                        renderListings();
+                        alert('Listings imported successfully!');
+                    } catch (error) {
+                        alert('Error importing listings: Invalid JSON format');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        }
+
+        // API Integration placeholder functions
+        async function authenticateUser(credentials) {
+            // Placeholder for user authentication
+            return { success: true, token: 'mock_token', user: { id: 1, name: 'John Doe' } };
+        }
+
+        async function fetchListingsFromAPI() {
+            // Placeholder for fetching real listings from backend
+            try {
+                // const response = await fetch('/api/listings');
+                // const data = await response.json();
+                // return data;
+                return listings; // Using mock data for now
+            } catch (error) {
+                console.error('Error fetching listings:', error);
+                return [];
+            }
+        }
+
+        async function submitBookingToAPI(bookingData) {
+            // Placeholder for submitting booking to backend
+            try {
+                // const response = await fetch('/api/bookings', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify(bookingData)
+                // });
+                // return await response.json();
+                return { success: true, bookingId: 'mock_booking_123' };
+            } catch (error) {
+                console.error('Error submitting booking:', error);
+                return { success: false, error: 'Network error' };
+            }
+        }
+
+        // Performance optimization: Debounced search
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        const debouncedSearch = debounce(performSearch, 300);
+
+        // Real-time search as user types
+        document.getElementById('searchInput').oninput = debouncedSearch;
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + K to focus search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                document.getElementById('searchInput').focus();
+            }
+            
+            // Escape to close modal
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Infinite scroll for large datasets
+        function setupInfiniteScroll() {
+            let currentPage = 1;
+            const itemsPerPage = 6;
+            
+            window.addEventListener('scroll', () => {
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 1000) {
+                    loadMoreListings();
+                }
+            });
+            
+            function loadMoreListings() {
+                // This would normally fetch more data from API
+                // For demo purposes, we'll just show all current listings
+                renderListings();
+            }
+        }
+
+        // Setup infinite scroll
+        setupInfiniteScroll();
+
+        // Analytics tracking (placeholder)
+        function trackEvent(eventName, properties) {
+            console.log('Analytics Event:', eventName, properties);
+            // In a real app, you'd send this to your analytics service
+            // analytics.track(eventName, properties);
+        }
+
+        // Track user interactions
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('.btn-primary')) {
+                trackEvent('Button Click', { button: 'primary', text: e.target.textContent });
+            }
+            if (e.target.closest('.listing-card')) {
+                trackEvent('Listing View', { listingId: e.target.closest('.listing-card').dataset.id });
+            }
+        });
+
+        // Service Worker for offline functionality (placeholder)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                // navigator.serviceWorker.register('/sw.js')
+                //     .then(function(registration) {
+                //         console.log('ServiceWorker registration successful');
+                //     })
+                //     .catch(function(err) {
+                //         console.log('ServiceWorker registration failed');
+                //     });
+            });
+        }
+
+        // PWA Install prompt
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show install button
+            const installBtn = document.createElement('button');
+            installBtn.textContent = 'Install App';
+            installBtn.className = 'btn btn-secondary';
+            installBtn.style.position = 'fixed';
+            installBtn.style.top = '10px';
+            installBtn.style.right = '10px';
+            installBtn.style.zIndex = '9999';
+            
+            installBtn.addEventListener('click', () => {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the install prompt');
+                    }
+                    deferredPrompt = null;
+                    installBtn.remove();
+                });
+            });
+            
+            document.body.appendChild(installBtn);
+        });
+    </script>
+</body>
+</html>
